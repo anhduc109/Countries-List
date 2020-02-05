@@ -13,7 +13,17 @@ Convert the personal porfolio Website that you've done as previous assignments i
 
 When done (or even not done but you want to have a review), make a PR to upstream, tag pair mate & instructors as reviewers.
 
-## Assignment 2
+## Assignment 3
+Write a custom hook that does:
+
+* Given a country name (international or native), returns a country object from [countries APIs](https://restcountries.eu/). You may use caching for better performance.
+* The example usage of the hook is like this:
+```
+const [error, country] = useCountry('Suomi')
+```
+* Convert that hook into a HoC
+
+## Assignment 3
 Convert any of your existing React apps:
 
 * Use functional components instead of class components
