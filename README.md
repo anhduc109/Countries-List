@@ -13,7 +13,7 @@ Convert the personal porfolio Website that you've done as previous assignments i
 
 When done (or even not done but you want to have a review), make a PR to upstream, tag pair mate & instructors as reviewers.
 
-## Assignment 3
+## Assignment 2
 Write a custom hook that does:
 
 * Given a country name (international or native), returns a country object from [countries APIs](https://restcountries.eu/). You may use caching for better performance.
