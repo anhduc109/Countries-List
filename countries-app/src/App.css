@@ -1,0 +1,48 @@
+.app-wrapper {
+  font-family: "Roboto", sans-serif;
+}
+
+.header {
+  text-align: center;
+}
+
+.search-wrapper {
+  text-align: center;
+}
+
+.search-bar {
+  width: 80%;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+}
+
+.flag-img {
+  width: 80px;
+}
+
+.country-table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+
+.country-table td,
+.country-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.country-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.country-table tr:hover {
+  background-color: #ddd;
+}
+
+.country-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #3d4550;
+  color: white;
+}
