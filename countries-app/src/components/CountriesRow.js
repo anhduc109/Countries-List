@@ -10,9 +10,9 @@ const CountriesRow = ({ data }) => {
       </td>
       <td>{data.name}</td>
       <td>
-        {data.languages.map((item, index) => {
+        {data.languages.map(item => {
           return (
-            <React.Fragment key={index}>
+            <React.Fragment key={item.name}>
               {item.name}
               <br />
             </React.Fragment>
@@ -24,5 +24,7 @@ const CountriesRow = ({ data }) => {
     </tr>
   );
 };
+
+CountriesRow.displayName = "CountriesRow";
 
 export default CountriesRow;
