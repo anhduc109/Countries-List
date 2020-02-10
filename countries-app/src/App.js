@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "./App.css";
-import useFetch from "./custom-hooks/useFetch";
+import useCountries from "./custom-hooks/useCountries";
 import SearchBar from "./components/SearchBar";
 import CountriesTable from "./components/CountriesTable";
 
@@ -10,7 +10,7 @@ const App = () => {
   const [filteredField, setFilteredField] = useState("name");
   const [isAsc, setIsAsc] = useState(true);
 
-  const [countries, error] = useFetch(searchKeyword, filteredField, isAsc);
+  const [countries, error] = useCountries(searchKeyword, filteredField, isAsc);
 
   const handleSearchInput = evt => {
     setSearchKeyword(evt.target.value);
