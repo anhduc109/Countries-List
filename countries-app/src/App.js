@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import lodash from "lodash";
+import React, { useState } from "react";
 
 import "./App.css";
 import useFetch from "./custom-hooks/useFetch";
@@ -7,56 +6,19 @@ import SearchBar from "./components/SearchBar";
 import CountriesTable from "./components/CountriesTable";
 
 const App = () => {
-  const [countries, error] = useFetch();
-  const [filteredCountries, setFilteredCountries] = useState([]);
-  const [isAscName, setIsAscName] = useState(true);
-  const [isAscPopulation, setIsAscPopulation] = useState(true);
-  const [isAscRegion, setIsAscRegion] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [filteredField, setFilteredField] = useState("name");
+  const [isAsc, setIsAsc] = useState(true);
 
-  useEffect(() => {
-    setFilteredCountries(countries);
-  }, [countries]);
+  const [countries, error] = useFetch(searchKeyword, filteredField, isAsc);
 
   const handleSearchInput = evt => {
-    setFilteredCountries(
-      countries.filter(item =>
-        item.name.toLowerCase().includes(evt.target.value.toLowerCase())
-      )
-    );
+    setSearchKeyword(evt.target.value);
   };
 
-  const handleNameIsAsc = isAsc => {
-    let realIsAsc = !isAsc;
-    setIsAscName(!isAscName);
-    setIsAscPopulation(true);
-    setIsAscRegion(true);
-    setFilteredCountries(
-      lodash.orderBy(filteredCountries, "name", realIsAsc ? "asc" : "desc")
-    );
-  };
-
-  const handleIsAscPopulation = isAsc => {
-    let realIsAsc = !isAsc;
-    setIsAscPopulation(!isAscPopulation);
-    setIsAscName(true);
-    setIsAscRegion(true);
-    setFilteredCountries(
-      lodash.orderBy(
-        filteredCountries,
-        "population",
-        realIsAsc ? "asc" : "desc"
-      )
-    );
-  };
-
-  const handleIsAscRegion = isAsc => {
-    let realIsAsc = !isAsc;
-    setIsAscRegion(!isAscRegion);
-    setIsAscName(true);
-    setIsAscPopulation(true);
-    setFilteredCountries(
-      lodash.orderBy(filteredCountries, "region", realIsAsc ? "asc" : "desc")
-    );
+  const handleIsAsc = field => {
+    setFilteredField(field);
+    setIsAsc(!isAsc);
   };
 
   return !error ? (
@@ -64,13 +26,10 @@ const App = () => {
       <h1 className="header">Countries List</h1>
       <SearchBar handleSearchInput={handleSearchInput} />
       <CountriesTable
-        data={filteredCountries}
-        isAscName={isAscName}
-        handleNameIsAsc={handleNameIsAsc}
-        isAscPopulation={isAscPopulation}
-        handleIsAscPopulation={handleIsAscPopulation}
-        isAscRegion={isAscRegion}
-        handleIsAscRegion={handleIsAscRegion}
+        data={countries}
+        isAsc={isAsc}
+        handleIsAsc={handleIsAsc}
+        filteredField={filteredField}
       />
     </div>
   ) : (
