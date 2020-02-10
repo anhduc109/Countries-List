@@ -42,4 +42,6 @@ const useCountries = (keyword, filteredField, isAsc) => {
   return [filteredCountries, error];
 };
 
+useCountries.displayName = "useCountries";
+
 export default useCountries;
