@@ -32,6 +32,19 @@
   padding: 8px;
 }
 
+.arrow-symbol {
+  fill: white;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.arrow-symbol:hover {
+  fill: #cecece;
+}
+
 .country-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
