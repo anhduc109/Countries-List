@@ -13,4 +13,6 @@ const SearchBar = ({ handleSearchInput }) => {
   );
 };
 
+SearchBar.displayName = "SearchBar";
+
 export default SearchBar;
