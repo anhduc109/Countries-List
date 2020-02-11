@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import { blueGrey } from "@material-ui/core/colors";
 
-import { green, red } from "@material-ui/core/colors";
+import { deepOrange } from "@material-ui/core/colors";
 
 import "./App.css";
 import useCountries from "./custom-hooks/useCountries";
