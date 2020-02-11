@@ -1,15 +1,16 @@
 import React from "react";
+import { TableRow, TableCell } from "@material-ui/core";
 
 import Flag from "./Flag";
 
 const CountriesRow = ({ data }) => {
   return (
-    <tr>
-      <td>
+    <TableRow>
+      <TableCell>
         <Flag url={data.flag} name={data.name} />
-      </td>
-      <td>{data.name}</td>
-      <td>
+      </TableCell>
+      <TableCell>{data.name}</TableCell>
+      <TableCell>
         {data.languages.map(item => {
           return (
             <React.Fragment key={item.name}>
@@ -18,10 +19,10 @@ const CountriesRow = ({ data }) => {
             </React.Fragment>
           );
         })}
-      </td>
-      <td>{data.population}</td>
-      <td>{data.region}</td>
-    </tr>
+      </TableCell>
+      <TableCell>{data.population}</TableCell>
+      <TableCell>{data.region}</TableCell>
+    </TableRow>
   );
 };
 

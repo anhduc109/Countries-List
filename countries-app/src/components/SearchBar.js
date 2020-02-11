@@ -1,13 +1,24 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: "80%",
+    marginBottom: "30px"
+  }
+}));
 
 const SearchBar = ({ handleSearchInput }) => {
+  const classes = useStyles();
+
   return (
     <div className="search-wrapper">
-      <input
-        className="search-bar"
+      <TextField
+        className={classes.root}
         type="text"
         onChange={handleSearchInput}
-        placeholder="Search for a country ..."
+        label="Search for a country"
       />
     </div>
   );
