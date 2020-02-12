@@ -12,6 +12,8 @@ const useStyles = makeStyles(theme => ({
 const SearchBar = ({ handleSearchInput }) => {
   const classes = useStyles();
 
+  console.log("rendering");
+
   return (
     <div className="search-wrapper">
       <TextField
@@ -24,6 +26,7 @@ const SearchBar = ({ handleSearchInput }) => {
   );
 };
 
-SearchBar.displayName = "SearchBar";
+// Optimization with React.memo
+export default React.memo(SearchBar);
 
-export default SearchBar;
+SearchBar.displayName = "SearchBar";

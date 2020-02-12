@@ -1,4 +1,5 @@
 import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableHead,
@@ -10,24 +11,36 @@ import {
 
 import CountriesRow from "./CountriesRow";
 
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: "#b388ff"
+  }
+}))(TableCell);
+
+const StyledTableSortLabel = withStyles(theme => ({
+  root: {
+    color: "white"
+  }
+}))(TableSortLabel);
+
 const CountriesTable = ({ data, handleIsAsc, isAsc, filteredField }) => {
   return (
-    <Table>
+    <Table stickyHeader>
       <TableHead>
         <TableRow>
-          <TableCell>Flag</TableCell>
-          <TableCell>
-            <TableSortLabel
+          <StyledTableCell>Flag</StyledTableCell>
+          <StyledTableCell>
+            <StyledTableSortLabel
               active={true}
               direction={isAsc && filteredField === "name" ? "asc" : "desc"}
               onClick={() => handleIsAsc("name")}
             >
               Name
-            </TableSortLabel>
-          </TableCell>
-          <TableCell>Languages</TableCell>
-          <TableCell>
-            <TableSortLabel
+            </StyledTableSortLabel>
+          </StyledTableCell>
+          <StyledTableCell>Languages</StyledTableCell>
+          <StyledTableCell>
+            <StyledTableSortLabel
               active={true}
               direction={
                 isAsc && filteredField === "population" ? "asc" : "desc"
@@ -35,17 +48,17 @@ const CountriesTable = ({ data, handleIsAsc, isAsc, filteredField }) => {
               onClick={() => handleIsAsc("population")}
             >
               Population
-            </TableSortLabel>
-          </TableCell>
-          <TableCell>
-            <TableSortLabel
+            </StyledTableSortLabel>
+          </StyledTableCell>
+          <StyledTableCell>
+            <StyledTableSortLabel
               active={true}
               direction={isAsc && filteredField === "region" ? "asc" : "desc"}
               onClick={() => handleIsAsc("region")}
             >
               Region
-            </TableSortLabel>
-          </TableCell>
+            </StyledTableSortLabel>
+          </StyledTableCell>
         </TableRow>
       </TableHead>
       <TableBody>

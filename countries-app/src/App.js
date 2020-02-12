@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import { blueGrey } from "@material-ui/core/colors";
-
-import { deepOrange } from "@material-ui/core/colors";
+import React, { useState, useCallback } from "react";
+import Typography from "@material-ui/core/Typography";
 
 import "./App.css";
 import useCountries from "./custom-hooks/useCountries";
@@ -16,37 +13,29 @@ const App = () => {
 
   const [countries, error] = useCountries(searchKeyword, filteredField, isAsc);
 
-  const handleSearchInput = evt => {
+  // Adding useCallback function to prevent SearchBar from re-rendering when it's unecessary
+  const handleSearchInput = useCallback(evt => {
     setSearchKeyword(evt.target.value);
-  };
+  }, []);
 
   const handleIsAsc = field => {
     setFilteredField(field);
     setIsAsc(!isAsc);
   };
 
-  const theme = createMuiTheme({
-    palette: {
-      primary: blueGrey
-    },
-    typography: {
-      fontFamily: "Raleway, Arial"
-    }
-  });
-
   return !error ? (
-    <MuiThemeProvider theme={theme}>
-      <div className="app-wrapper">
-        <h1 className="header">Countries List</h1>
-        <SearchBar handleSearchInput={handleSearchInput} />
-        <CountriesTable
-          data={countries}
-          isAsc={isAsc}
-          handleIsAsc={handleIsAsc}
-          filteredField={filteredField}
-        />
-      </div>
-    </MuiThemeProvider>
+    <div className="app-wrapper">
+      <Typography className="header" variant="h4">
+        Countries List
+      </Typography>
+      <SearchBar handleSearchInput={handleSearchInput} />
+      <CountriesTable
+        data={countries}
+        isAsc={isAsc}
+        handleIsAsc={handleIsAsc}
+        filteredField={filteredField}
+      />
+    </div>
   ) : (
     <div className="app-wrapper">
       <h1>Something wrong!</h1>
