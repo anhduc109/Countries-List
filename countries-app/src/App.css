@@ -1,0 +1,22 @@
+body {
+  padding-top: 30px;
+  margin: 0;
+}
+
+.header {
+  text-align: center;
+  color: #272829;
+}
+
+.search-wrapper {
+  text-align: center;
+}
+
+.search-bar {
+  width: 80%;
+  padding: 10px 20px;
+}
+
+.flag-img {
+  width: 80px;
+}
