@@ -1,32 +1,166 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import React, { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import {
+  fade,
+  createStyles,
+  makeStyles,
+  Theme
+} from "@material-ui/core/styles";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  InputBase,
+  IconButton,
+  Badge,
+  Drawer
+} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
 
-import { HandleSearchInput } from "../types";
+import { HandleSearchInput, AppState } from "../types";
+import FavoritesDrawer from "./FavoritesDrawer";
+import ThemeContext from "../context-api/context";
+import { toggleDrawer } from "../redux/actions";
 
-type HandleSearchInputProps = {
-  handleSearchInput: HandleSearchInput;
+type SearchBarProps = {
+  handleSearchInput: HandleSearchInput | undefined;
 };
 
 //Styling Material UI
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "80%",
-    marginBottom: "30px"
-  }
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      marginBottom: 65
+    },
+    homelink: {
+      textDecoration: "none"
+    },
+    title: {
+      flexGrow: 0,
+      color: "white",
+      fontFamily: " 'Righteous', sans-serif"
+    },
+    search: {
+      flexGrow: 1,
+      position: "relative",
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      "&:hover": {
+        backgroundColor: fade(theme.palette.common.white, 0.25)
+      },
+      marginRight: theme.spacing(2),
+      marginLeft: 0,
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(3),
+        width: "auto"
+      }
+    },
+    searchIcon: {
+      width: theme.spacing(7),
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    inputRoot: {
+      color: "inherit"
+    },
+    inputInput: {
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: "100%"
+      }
+    },
+    sectionDesktop: {
+      display: "none",
+      [theme.breakpoints.up("md")]: {
+        display: "flex"
+      }
+    }
+  })
+);
 
-const SearchBar = ({ handleSearchInput }: HandleSearchInputProps) => {
+const SearchBar = ({ handleSearchInput }: SearchBarProps) => {
+  const { theme, switchTheme } = useContext(ThemeContext);
+
   const classes = useStyles();
+
+  const favoriteCountries = useSelector(
+    (state: AppState) => state.countries.favorites
+  );
+
+  const drawerStatus = useSelector((state: AppState) => state.ui.toggleDrawer);
+
+  const dispatch = useDispatch();
 
   return (
     <div className="search-wrapper">
-      <TextField
-        className={classes.root}
-        type="text"
-        onChange={handleSearchInput}
-        label="Search for a country"
-      />
+      <Drawer
+        open={drawerStatus}
+        anchor="right"
+        onClose={() => dispatch(toggleDrawer(false))}
+      >
+        <FavoritesDrawer />
+      </Drawer>
+      <div className={classes.root}>
+        <AppBar position="fixed">
+          <Toolbar>
+            <Link to={"/"} className={classes.homelink}>
+              <Button size="large" className={classes.title}>
+                Countries App
+              </Button>
+            </Link>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                inputProps={{ "aria-label": "search" }}
+                onChange={handleSearchInput}
+              />
+            </div>
+            <div className={classes.sectionDesktop}>
+              <IconButton
+                aria-label="show dark or light mode"
+                color="inherit"
+                onClick={switchTheme}
+              >
+                {theme.palette.type === "dark" ? (
+                  <Brightness7Icon />
+                ) : (
+                  <Brightness4Icon />
+                )}
+              </IconButton>
+              <IconButton
+                aria-label="show favorite countries"
+                color="inherit"
+                onClick={() => dispatch(toggleDrawer(true))}
+              >
+                <Badge
+                  badgeContent={favoriteCountries.length}
+                  color="secondary"
+                >
+                  <FavoriteIcon />
+                </Badge>
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+      </div>
     </div>
   );
 };

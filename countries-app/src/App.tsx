@@ -1,45 +1,52 @@
-import React, { useState, useCallback } from "react";
-import Typography from "@material-ui/core/Typography";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
-import { HandleIsAsc, HandleSearchInput } from "./types";
-import useCountries from "./custom-hooks/useCountries";
 import SearchBar from "./components/SearchBar";
-import CountriesTable from "./components/CountriesTable";
+import { changeKeyword } from "./redux/actions";
+import { HandleSearchInput } from "./types";
+import ThemeContext, { themes } from "./context-api/context";
+import CountriesHome from "./components/CountriesHome";
+import CountryDetail from "./components/CountryDetail";
 
 const App = () => {
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [filteredField, setFilteredField] = useState("name");
-  const [isAsc, setIsAsc] = useState(true);
+  const [themeContext, setThemeContext] = useState({
+    theme: themes.dark,
+    switchTheme: () => {
+      setThemeContext(current => ({
+        ...current,
+        theme: current.theme === themes.dark ? themes.light : themes.dark
+      }));
+    }
+  });
 
-  const [countries, error] = useCountries(searchKeyword, filteredField, isAsc);
+  const theme: any = createMuiTheme(themeContext.theme);
 
-  // Adding useCallback function to prevent SearchBar from re-rendering when it's unecessary
-  const handleSearchInput: HandleSearchInput = useCallback(evt => {
-    setSearchKeyword(evt.target.value);
-  }, []);
+  const dispatch = useDispatch();
 
-  const handleIsAsc: HandleIsAsc = field => {
-    setFilteredField(field);
-    setIsAsc(!isAsc);
+  const handleSearchInput: HandleSearchInput = evt => {
+    dispatch(changeKeyword(evt.target.value));
   };
 
-  return !error ? (
+  return (
     <div className="app-wrapper">
-      <Typography className="header" variant="h4">
-        Countries List
-      </Typography>
-      <SearchBar handleSearchInput={handleSearchInput} />
-      <CountriesTable
-        data={countries}
-        isAsc={isAsc}
-        handleIsAsc={handleIsAsc}
-        filteredField={filteredField}
-      />
-    </div>
-  ) : (
-    <div className="app-wrapper">
-      <h1>Something wrong!</h1>
+      <ThemeContext.Provider value={themeContext}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline>
+            <Router>
+              <SearchBar handleSearchInput={handleSearchInput} />
+              <Switch>
+                <Route path="/" exact component={CountriesHome} />
+                <Route path="/:name" component={CountryDetail} />
+              </Switch>
+            </Router>
+          </CssBaseline>
+        </ThemeProvider>
+      </ThemeContext.Provider>
     </div>
   );
 };

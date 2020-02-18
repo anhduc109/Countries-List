@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import lodash from "lodash";
 
-import { Country } from "../types";
+import { Country, AppState } from "../types";
+import { fetchData } from "../redux/actions";
 
 const useCountries = (
   keyword: string,
@@ -13,21 +15,27 @@ const useCountries = (
   const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
   const [error, setError] = useState(null);
 
-  const fetchCountries = async () => {
-    try {
-      let res = await fetch(baseUrl);
-      let data = await res.json();
-      setCountries(data);
-    } catch (error) {
-      setError(error);
-    }
-  };
+  const countriesAPI = useSelector(
+    (state: AppState) => state.countries.countriesAPI
+  );
+
+  // const fetchCountries = async () => {
+  //   try {
+  //     let res = await fetch(baseUrl);
+  //     let data = await res.json();
+  //     setCountries(data);
+  //   } catch (error) {
+  //     setError(error);
+  //   }
+  // };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCountries();
+    dispatch(fetchData());
   }, []);
 
   useEffect(() => {
+    setCountries(countriesAPI);
     let newCountriesList = countries.filter(
       item =>
         item.name.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -43,7 +51,7 @@ const useCountries = (
     );
 
     setFilteredCountries(newCountriesList);
-  }, [countries, keyword, filteredField, isAsc]);
+  }, [countries, keyword, filteredField, isAsc, countriesAPI]);
 
   return [filteredCountries, error];
 };

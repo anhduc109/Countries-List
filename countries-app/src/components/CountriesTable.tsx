@@ -20,11 +20,7 @@ type CountriesTableProps = {
 };
 
 //Styling Material UI
-const StyledTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: "#b388ff"
-  }
-}))(TableCell);
+const StyledTableCell = withStyles(theme => ({}))(TableCell);
 
 const StyledTableSortLabel = withStyles(theme => ({
   root: {
@@ -39,49 +35,51 @@ const CountriesTable = ({
   filteredField
 }: CountriesTableProps) => {
   return (
-    <Table stickyHeader>
-      <TableHead>
-        <TableRow>
-          <StyledTableCell>Flag</StyledTableCell>
-          <StyledTableCell>
-            <StyledTableSortLabel
-              active={true}
-              direction={isAsc && filteredField === "name" ? "asc" : "desc"}
-              onClick={() => handleIsAsc("name")}
-            >
-              Name
-            </StyledTableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>Languages</StyledTableCell>
-          <StyledTableCell>
-            <StyledTableSortLabel
-              active={true}
-              direction={
-                isAsc && filteredField === "population" ? "asc" : "desc"
-              }
-              onClick={() => handleIsAsc("population")}
-            >
-              Population
-            </StyledTableSortLabel>
-          </StyledTableCell>
-          <StyledTableCell>
-            <StyledTableSortLabel
-              active={true}
-              direction={isAsc && filteredField === "region" ? "asc" : "desc"}
-              onClick={() => handleIsAsc("region")}
-            >
-              Region
-            </StyledTableSortLabel>
-          </StyledTableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {data &&
-          data.map(country => {
-            return <CountriesRow data={country} key={country.name} />;
-          })}
-      </TableBody>
-    </Table>
+    <>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Flag</StyledTableCell>
+            <StyledTableCell>
+              <StyledTableSortLabel
+                active={true}
+                direction={isAsc && filteredField === "name" ? "asc" : "desc"}
+                onClick={() => handleIsAsc("name")}
+              >
+                Name
+              </StyledTableSortLabel>
+            </StyledTableCell>
+            <StyledTableCell>Languages</StyledTableCell>
+            <StyledTableCell>
+              <StyledTableSortLabel
+                active={true}
+                direction={
+                  isAsc && filteredField === "population" ? "asc" : "desc"
+                }
+                onClick={() => handleIsAsc("population")}
+              >
+                Population
+              </StyledTableSortLabel>
+            </StyledTableCell>
+            <StyledTableCell>
+              <StyledTableSortLabel
+                active={true}
+                direction={isAsc && filteredField === "region" ? "asc" : "desc"}
+                onClick={() => handleIsAsc("region")}
+              >
+                Region
+              </StyledTableSortLabel>
+            </StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data &&
+            data.map(country => {
+              return <CountriesRow data={country} key={country.name} />;
+            })}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 

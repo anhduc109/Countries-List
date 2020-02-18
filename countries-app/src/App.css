@@ -1,5 +1,4 @@
 body {
-  padding-top: 30px;
   margin: 0;
 }
 
@@ -19,4 +18,21 @@ body {
 
 .flag-img {
   width: 80px;
+}
+
+.fav-btn {
+  margin-left: 3px !important;
+}
+
+.img-detail {
+  width: 50%;
+}
+
+.country-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.country-link:hover {
+  color: #bdbdbd;
 }
