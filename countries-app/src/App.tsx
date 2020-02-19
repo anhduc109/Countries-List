@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -7,8 +7,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 import SearchBar from "./components/SearchBar";
-import { changeKeyword } from "./redux/actions";
-import { HandleSearchInput } from "./types";
+import { changeKeyword, addCountriesFromLocalStorage } from "./redux/actions";
+import { HandleSearchInput, Country } from "./types";
 import ThemeContext, { themes } from "./context-api/context";
 import CountriesHome from "./components/CountriesHome";
 import CountryDetail from "./components/CountryDetail";
@@ -31,6 +31,15 @@ const App = () => {
   const handleSearchInput: HandleSearchInput = evt => {
     dispatch(changeKeyword(evt.target.value));
   };
+
+  useEffect(() => {
+    const favoriteCountries: Country[] = JSON.parse(
+      localStorage.getItem("favoriteCountries") || "{}"
+    );
+
+    favoriteCountries.length > 0 &&
+      dispatch(addCountriesFromLocalStorage(favoriteCountries));
+  }, [dispatch]);
 
   return (
     <div className="app-wrapper">

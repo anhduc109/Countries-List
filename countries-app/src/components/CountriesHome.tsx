@@ -1,46 +1,62 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import CountriesTable from "./CountriesTable";
 import useCountries from "../custom-hooks/useCountries";
-import { HandleIsAsc, Country, AppState } from "../types";
-import { addCountriesFromLocalStorage } from "../redux/actions";
+import { HandleIsAsc, AppState } from "../types";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      position: "absolute",
+      left: "45%",
+      top: "40%"
+    }
+  })
+);
 
 const CountriesHome = () => {
   const [filteredField, setFilteredField] = useState("name");
   const [isAsc, setIsAsc] = useState(true);
 
+  const classes = useStyles();
+
   const searchKeyword = useSelector(
     (state: AppState) => state.countries.keyword
   );
-  const [countries, error] = useCountries(searchKeyword, filteredField, isAsc);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const favoriteCountries: Country[] = JSON.parse(
-      localStorage.getItem("favoriteCountries") || "{}"
-    );
+  const isFetching = useSelector(
+    (state: AppState) => state.countries.isFetching
+  );
 
-    favoriteCountries.length > 0 &&
-      dispatch(addCountriesFromLocalStorage(favoriteCountries));
-  }, []);
+  const [countries] = useCountries(searchKeyword, filteredField, isAsc);
 
   const handleIsAsc: HandleIsAsc = field => {
     setFilteredField(field);
     setIsAsc(!isAsc);
   };
 
-  return !error ? (
+  return (
     <>
-      <CountriesTable
-        data={countries}
-        isAsc={isAsc}
-        handleIsAsc={handleIsAsc}
-        filteredField={filteredField}
-      />
+      {isFetching ? (
+        <CircularProgress
+          className={classes.root}
+          size={150}
+          thickness={1}
+          color="secondary"
+          disableShrink
+        />
+      ) : (
+        <CountriesTable
+          data={countries}
+          isAsc={isAsc}
+          handleIsAsc={handleIsAsc}
+          filteredField={filteredField}
+        />
+      )}
     </>
-  ) : (
-    <h1>Something wrong!</h1>
   );
 };
 

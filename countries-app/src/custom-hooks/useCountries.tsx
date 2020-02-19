@@ -10,29 +10,21 @@ const useCountries = (
   filteredField: string,
   isAsc: boolean
 ) => {
-  const baseUrl = "https://restcountries.eu/rest/v2/all";
   const [countries, setCountries] = useState<Country[]>([]);
   const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
-  const [error, setError] = useState(null);
 
   const countriesAPI = useSelector(
     (state: AppState) => state.countries.countriesAPI
   );
 
-  // const fetchCountries = async () => {
-  //   try {
-  //     let res = await fetch(baseUrl);
-  //     let data = await res.json();
-  //     setCountries(data);
-  //   } catch (error) {
-  //     setError(error);
-  //   }
-  // };
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchData());
-  }, []);
+    //Prevent from re-fetching
+    if (countriesAPI.length <= 0) {
+      dispatch(fetchData());
+    }
+  }, [dispatch, countriesAPI]);
 
   useEffect(() => {
     setCountries(countriesAPI);
@@ -53,7 +45,7 @@ const useCountries = (
     setFilteredCountries(newCountriesList);
   }, [countries, keyword, filteredField, isAsc, countriesAPI]);
 
-  return [filteredCountries, error];
+  return [filteredCountries];
 };
 
 export default useCountries;

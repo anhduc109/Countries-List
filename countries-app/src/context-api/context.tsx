@@ -14,6 +14,9 @@ export const themes: any = {
       primary: {
         main: "#333"
       },
+      secondary: {
+        main: "#2196F3"
+      },
       type: "dark"
     }
   }

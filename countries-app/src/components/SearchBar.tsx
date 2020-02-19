@@ -37,16 +37,17 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       marginBottom: 65
     },
+    grow: {
+      flexGrow: 1
+    },
     homelink: {
       textDecoration: "none"
     },
     title: {
-      flexGrow: 0,
       color: "white",
       fontFamily: " 'Righteous', sans-serif"
     },
     search: {
-      flexGrow: 1,
       position: "relative",
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -74,10 +75,11 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "inherit"
     },
     inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
       transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "100%"
+      width: "200px",
+      [theme.breakpoints.up("sm")]: {
+        width: "400px"
       }
     },
     sectionDesktop: {
@@ -133,6 +135,7 @@ const SearchBar = ({ handleSearchInput }: SearchBarProps) => {
                 onChange={handleSearchInput}
               />
             </div>
+            <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton
                 aria-label="show dark or light mode"

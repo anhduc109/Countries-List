@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       padding: 50
     },
+    textWidth: {
+      maxWidth: 200
+    },
+    left: {
+      textAlign: "left"
+    },
     title: {
       marginTop: 15
     },
@@ -42,8 +48,6 @@ const CountryDetail = ({ location }: any) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={5}>
-        {/* <Grid className={classes.header} item xs={12}>
-        </Grid> */}
         <Grid item xs={5} className={classes.center}>
           <Paper className={classes.paper} elevation={3}>
             <img
@@ -60,38 +64,77 @@ const CountryDetail = ({ location }: any) => {
           <Paper className={classes.paper} elevation={3}>
             <List component="nav" aria-label="Country detail">
               <ListItem button>
-                <ListItemText primary="Alpha 3 Code:" />
-                <ListItemText primary={countryData.alpha3Code} />
+                <ListItemText
+                  className={classes.textWidth}
+                  primary="Alpha 3 Code:"
+                />
+                <ListItemText
+                  className={classes.left}
+                  primary={countryData.alpha3Code}
+                />
               </ListItem>
               <Divider />
               <ListItem button>
-                <ListItemText primary="Population:" />
-                <ListItemText primary={countryData.population} />
+                <ListItemText
+                  className={classes.textWidth}
+                  primary="Population:"
+                />
+                <ListItemText
+                  className={classes.left}
+                  primary={countryData.population}
+                />
               </ListItem>
               <Divider />
               <ListItem button>
-                <ListItemText primary="Capital:" />
-                <ListItemText primary={countryData.capital} />
+                <ListItemText
+                  className={classes.textWidth}
+                  primary="Capital:"
+                />
+                <ListItemText
+                  className={classes.left}
+                  primary={countryData.capital}
+                />
               </ListItem>
               <Divider />
               <ListItem button>
-                <ListItemText primary="Region:" />
-                <ListItemText primary={countryData.region} />
+                <ListItemText className={classes.textWidth} primary="Region:" />
+                <ListItemText
+                  className={classes.left}
+                  primary={countryData.region}
+                />
               </ListItem>
               <Divider />
               <ListItem button>
-                <ListItemText primary="Sub Region:" />
-                <ListItemText primary={countryData.subregion} />
+                <ListItemText
+                  className={classes.textWidth}
+                  primary="Sub Region:"
+                />
+                <ListItemText
+                  className={classes.left}
+                  primary={countryData.subregion}
+                />
               </ListItem>
               <Divider />
               <ListItem button>
-                <ListItemText primary="Borders:" />
-                <ListItemText primary={countryData.borders.join()} />
+                <ListItemText
+                  className={classes.textWidth}
+                  primary="Borders:"
+                />
+                <ListItemText
+                  className={classes.left}
+                  primary={countryData.borders.join()}
+                />
               </ListItem>
               <Divider />
               <ListItem button>
-                <ListItemText primary="Calling Codes:" />
-                <ListItemText primary={"+" + countryData.callingCodes.join()} />
+                <ListItemText
+                  className={classes.textWidth}
+                  primary="Calling Codes:"
+                />
+                <ListItemText
+                  className={classes.left}
+                  primary={"+" + countryData.callingCodes.join()}
+                />
               </ListItem>
             </List>
           </Paper>
