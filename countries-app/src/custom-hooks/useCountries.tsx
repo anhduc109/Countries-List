@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import lodash from "lodash";
 
 import { Country, AppState } from "../types";
-import { fetchData } from "../redux/actions";
+import { fetchData, fetchDataSucceed } from "../redux/actions";
 
 const useCountries = (
   keyword: string,
@@ -17,14 +17,20 @@ const useCountries = (
     (state: AppState) => state.countries.countriesAPI
   );
 
+  const countriesAPILocal: Country[] = JSON.parse(
+    localStorage.getItem("countriesAPI") || "[]"
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     //Prevent from re-fetching
-    if (countriesAPI.length <= 0) {
+    if (countriesAPILocal.length <= 0) {
       dispatch(fetchData());
+    } else if (countriesAPI.length <= 0) {
+      dispatch(fetchDataSucceed(countriesAPILocal));
     }
-  }, [dispatch, countriesAPI]);
+  }, [dispatch, countriesAPILocal, countriesAPI]);
 
   useEffect(() => {
     setCountries(countriesAPI);
