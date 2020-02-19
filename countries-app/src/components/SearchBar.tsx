@@ -20,6 +20,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
+import PublicIcon from "@material-ui/icons/Public";
 
 import { HandleSearchInput, AppState } from "../types";
 import FavoritesDrawer from "./FavoritesDrawer";
@@ -44,8 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "none"
     },
     title: {
-      color: "white",
-      fontFamily: " 'Righteous', sans-serif"
+      color: "white"
     },
     search: {
       position: "relative",
@@ -117,7 +117,12 @@ const SearchBar = ({ handleSearchInput }: SearchBarProps) => {
         <AppBar position="fixed">
           <Toolbar>
             <Link to={"/"} className={classes.homelink}>
-              <Button size="large" className={classes.title}>
+              <Button
+                size="large"
+                color="primary"
+                className={classes.title}
+                startIcon={<PublicIcon />}
+              >
                 Countries App
               </Button>
             </Link>
