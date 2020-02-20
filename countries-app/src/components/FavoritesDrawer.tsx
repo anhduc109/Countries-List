@@ -104,4 +104,4 @@ const FavoritesDrawer = () => {
   );
 };
 
-export default FavoritesDrawer;
+export default React.memo(FavoritesDrawer);

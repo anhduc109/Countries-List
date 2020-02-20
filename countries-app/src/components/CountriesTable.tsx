@@ -85,4 +85,4 @@ const CountriesTable = ({
 
 CountriesTable.displayName = "CountriesTable";
 
-export default CountriesTable;
+export default React.memo(CountriesTable);

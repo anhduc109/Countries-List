@@ -36,7 +36,6 @@ const App = () => {
     const favoriteCountries: Country[] = JSON.parse(
       localStorage.getItem("favoriteCountries") || "{}"
     );
-
     favoriteCountries.length > 0 &&
       dispatch(addCountriesFromLocalStorage(favoriteCountries));
   }, [dispatch]);

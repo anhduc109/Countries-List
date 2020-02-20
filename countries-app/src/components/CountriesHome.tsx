@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -33,10 +33,13 @@ const CountriesHome = () => {
 
   const [countries] = useCountries(searchKeyword, filteredField, isAsc);
 
-  const handleIsAsc: HandleIsAsc = field => {
-    setFilteredField(field);
-    setIsAsc(!isAsc);
-  };
+  const handleIsAsc: HandleIsAsc = useCallback(
+    field => {
+      setFilteredField(field);
+      setIsAsc(!isAsc);
+    },
+    [isAsc]
+  );
 
   return (
     <>
@@ -60,4 +63,4 @@ const CountriesHome = () => {
   );
 };
 
-export default CountriesHome;
+export default React.memo(CountriesHome);

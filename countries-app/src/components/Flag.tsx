@@ -11,4 +11,4 @@ const Flag = ({ url, name }: FlagProps) => {
 
 Flag.displayName = "Flag";
 
-export default Flag;
+export default React.memo(Flag);
