@@ -35,7 +35,7 @@ const useCountries = (
   useEffect(() => {
     setCountries(countriesAPI);
     let newCountriesList = countries.filter(
-      item =>
+      (item) =>
         item.name.toLowerCase().includes(keyword.toLowerCase()) ||
         item.nativeName.toLowerCase().includes(keyword.toLowerCase()) ||
         item.population <= +keyword ||
